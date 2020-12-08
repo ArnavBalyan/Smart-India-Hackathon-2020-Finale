@@ -1,2 +1,13 @@
 flask
 flask_restful
+pandas
+gunicorn
+matplotlib
+numpy
+seaborn
+sklearn
+flask
+os-win
+uwsgi
+werkzeug
+lightgbm
