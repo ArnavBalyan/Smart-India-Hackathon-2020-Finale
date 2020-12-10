@@ -11,3 +11,6 @@ os-win
 uwsgi
 werkzeug
 lightgbm
+json
+jsonify
+collections
