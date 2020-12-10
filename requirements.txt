@@ -12,4 +12,3 @@ uwsgi
 werkzeug
 lightgbm
 jsonify
-collections
