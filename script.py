@@ -7,6 +7,9 @@ import pickle
 import json
 import jsonify
 from collections import OrderedDict
+import keras.backend.tensorflow_backend as tb
+import time
+# tb._SYMBOLIC_SCOPE.value = True
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -15,41 +18,160 @@ app.config['JSON_SORT_KEYS'] = False
 api = Api(app)
 # api2 = Api(app)
 def mdl1(txt1):
-#     print('rcvtxt',txt1)
     ret = OrderedDict()
     org = txt1.split('$')
-    hdr = ['model_id','room_id','no_of_occupants','indoor_temp','outdoor_temp','rel_hght_of_floor','ceiling_height','room_area','roof_material','humidity']
+    hdr = ['room_id','no_of_occupants','indoor_temp','outdoor_temp','rel_hght_of_floor','ceiling_height','room_area','roof_material','humidity']
+    ret['model_id'] = 1
     for i in range(len(hdr)):
         ret[hdr[i]] = org[i]
     ls = txt1.split('$')[1:]
     roomid = ls[1]
     floorid = ls[4]
-    ls = ls[1:]
-    print(ls)
-    to_predict = np.array(ls).reshape(1,8)
-    print(to_predict)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
     loaded_model = pickle.load(open("model1.pkl","rb"))
     result = loaded_model.predict(to_predict)
     ret['hvac_load'] = result[0]
-    print(ret)
-    lr = flask.jsonify(ret)
-    return lr
-#     return lr
+    return ret
+
+def hvach(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['compactness', 'surface_area', 'wall_area', 'roof_area', 'height', 'orientation', 'glazing_area', 'glazing_area_distribution']
+    ret['model_id'] = 2
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("heating_load.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['finxed_heating_load'] = result[0]
+    return ret
+
+def hvacc(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['compactness', 'surface_area', 'wall_area', 'roof_area', 'height', 'orientation', 'glazing_area', 'glazing_area_distribution']
+    ret['model_id'] = 3
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("cooling_load.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['fixed_cooling_load'] = result[0]
+    return ret
+
+def hec(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['i1*****','i2******','i3*******','i4******','i5******']
+    ret['model_id'] = 4
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls)#np.array(ls).reshape(1,len(ls))
+    to_predict = to_predict.reshape(1,-1)
+    to_pre = to_predict.reshape(to_predict.shape[0], to_predict.shape[1], 1)
+#     print(to_pre)
+    loaded_model = pickle.load(open("d2_lstm.pkl","rb"))
+    result = loaded_model.predict(to_pre)
+    ret['hourly_energy_consumption'] = str(result[0][0])
+    return ret
     
+def ef(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$') # kwh kwh kwh
+    hdr = ['active_power','reactive_power','voltage','ktch','ldr']
+    ret['model_id'] = 5
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("d3_xgb.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['hvac_load'] = result[0]
+    return ret
     
+def efp(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['region_cluster','maintenance_vendor','manufacturer','equipment_type','S15','S17','S13','S5','S16','S19','S18','S8','equipment_age']
+    ret['model_id'] = 6
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("dataset5.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['equipment_health_status(faliure)'] = str(result[0])
+    return ret
+
+def epc(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['voltage', 'global_intensity','sub_meter_1', 'sub_meter_2','sub_meter_3']
+    ret['model_id'] = 7
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("dataset6_dtr.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['*****************************************************************'] = result[0]
+    return ret
+
+def aep(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['temp_ktcharea','humidity_ktcharea','temp_livroom','humidity_livroom','temp_ldroom','humidity_ldroom','temp_ofroom','humidity_ofroom','temp_bthroom','humidity_bthroom','temp_outdoor','humidity_outdoor','temp_irnroom','humidity_irnroom','temp_tnroom','humidity_tnroom','temp_prroom','humidity_prroom','temp_outdoor2','pressure_outdoor2','humidity_outdoor2','wnd_speed_outdoor2','vis_outdoo2','rv1','rv2']
+    ret['model_id'] = 8
+#     print('rcv ln',len(org))
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("d7_lightgbm.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['*********************************************************************'] = result[0]
+    return ret
+
 def invalid(txt):
     return 'Bad Request'
 class Dash(Resource):
     pass
+res = []
 class Display(Resource):
 
     def get(self, string1):
+        global res
+        res = []
         txt = string1
-        ids = txt[0]
-        if(ids == '1'):
-            return mdl1(txt)
+        tx = txt.split('_')
+        res.append(mdl1(tx[0]))
+        res.append(hvach(tx[1]))
+        res.append(hvacc(tx[1]))
+        res.append(hec(tx[2]))
+        res.append('EF MODEL ERROR XGB')
+#         res.append(ef(tx[3]))        
+        res.append(efp(tx[4]))
+        res.append(epc(tx[5]))
+        res.append('AEP MODEL ERROR LGBM')
+#         res.append(aep(tx[6]))
 
-        return invalid(txt)
+        return flask.jsonify(results = res)
+        # return invalid(txt)
         # headers = {'Content-Type': 'text/html'}
         # return{'text':'test'}
         # return make_response(render_template("result.html",result= "{}".format(string1)))
@@ -57,4 +179,4 @@ class Display(Resource):
 api.add_resource(Display, '/search/v1/<string:string1>')
 api.add_resource(Dash, '/dash/v1/<string:string1>')  
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=False)
