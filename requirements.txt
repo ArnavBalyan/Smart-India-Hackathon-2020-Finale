@@ -10,7 +10,6 @@ flask
 os-win
 uwsgi
 werkzeug
-tensorflow
 keras
 lightgbm
 jsonify
