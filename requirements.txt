@@ -1,11 +1,9 @@
 flask
 flask_restful
 gunicorn
-numpy
-seaborn
+numpy==1.18.5
 sklearn
 flask
-os-win
 uwsgi
 werkzeug
 tensorflow
