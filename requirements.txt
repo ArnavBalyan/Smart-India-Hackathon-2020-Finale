@@ -6,7 +6,6 @@ sklearn
 flask
 uwsgi
 werkzeug
-tensorflow
 jsonify
-keras
 xgboost
+lightgbm
