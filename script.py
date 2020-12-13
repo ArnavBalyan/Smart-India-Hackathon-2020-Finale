@@ -7,8 +7,7 @@ import pickle
 import json
 import jsonify
 from collections import OrderedDict
-import time
-# tb._SYMBOLIC_SCOPE.value = True
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -45,7 +44,7 @@ def hvach(txt1):
 #     print(to_predict)
     loaded_model = pickle.load(open("heating_load.pkl","rb"))
     result = loaded_model.predict(to_predict)
-    ret['finxed_heating_load'] = result[0]
+    ret['fixed_heating_load'] = result[0]
     return ret
 
 def hvacc(txt1):
@@ -66,19 +65,18 @@ def hvacc(txt1):
 def hec(txt1):
     ret = OrderedDict()
     org = txt1.split('$')
-    hdr = ['i1*****','i2******','i3*******','i4******','i5******']
+    hdr = ['interval1','interval2','interval3','interval4','interval5']
     ret['model_id'] = 4
     for i in range(len(hdr)):
         ret[hdr[i]] = org[i]
     ls = txt1.split('$')
 #     print(ls)
-    to_predict = np.array(ls)#np.array(ls).reshape(1,len(ls))
-    to_predict = to_predict.reshape(1,-1)
-    to_pre = to_predict.reshape(to_predict.shape[0], to_predict.shape[1], 1)
-#     print(to_pre)
-    loaded_model = pickle.load(open("d2_lstm.pkl","rb"))
-    result = loaded_model.predict(to_pre)
-    ret['hourly_energy_consumption'] = str(result[0][0])
+    print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+    x = np.asarray(to_predict, dtype='float64')
+    loaded_model = pickle.load(open("d2_lr.pkl","rb"))
+    result = loaded_model.predict(x)
+    ret['hourly_energy_consumption'] = str(result[0])
     return ret
     
 def ef(txt1):
@@ -92,9 +90,9 @@ def ef(txt1):
 #     print(ls)
     to_predict = np.array(ls).reshape(1,len(ls))
 #     print(to_predict)
-    loaded_model = pickle.load(open("d3_xgb.pkl","rb"))
+    loaded_model = pickle.load(open("d3_xgb1.pkl","rb"))
     result = loaded_model.predict(to_predict)
-    ret['hvac_load'] = result[0]
+    ret['hvac_load'] = str(result[0])
     return ret
     
 def efp(txt1):
@@ -126,7 +124,7 @@ def epc(txt1):
 #     print(to_predict)
     loaded_model = pickle.load(open("dataset6_dtr.pkl","rb"))
     result = loaded_model.predict(to_predict)
-    ret['*****************************************************************'] = result[0]
+    ret['predicted_energy_use'] = result[0]
     return ret
 
 def aep(txt1):
@@ -141,9 +139,9 @@ def aep(txt1):
 #     print(ls)
     to_predict = np.array(ls).reshape(1,len(ls))
 #     print(to_predict)
-    loaded_model = pickle.load(open("d7_lightgbm.pkl","rb"))
+    loaded_model = pickle.load(open("d7_lightgbm1.pkl","rb"))
     result = loaded_model.predict(to_predict)
-    ret['*********************************************************************'] = result[0]
+    ret['global_power'] = str(result[0])
     return ret
 
 def invalid(txt):
@@ -162,13 +160,14 @@ class Display(Resource):
         res.append(hvach(tx[1]))
         res.append(hvacc(tx[1]))
         res.append(hec(tx[2]))
-        res.append('EF MODEL ERROR XGB')
-#         res.append(ef(tx[3]))        
+#         res.append('EF MODEL ERROR XGB')
+        res.append(ef(tx[3]))        
         res.append(efp(tx[4]))
         res.append(epc(tx[5]))
-        res.append('AEP MODEL ERROR LGBM')
-#         res.append(aep(tx[6]))
-
+#         res.append('AEP MODEL ERROR LGBM')
+        res.append(aep(tx[6]))
+        global maintest
+        maintest = res
         return flask.jsonify(results = res)
         # return invalid(txt)
         # headers = {'Content-Type': 'text/html'}
