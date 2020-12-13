@@ -7,7 +7,6 @@ flask
 uwsgi
 werkzeug
 tensorflow
-keras
 lightgbm
 jsonify
 xgboost
