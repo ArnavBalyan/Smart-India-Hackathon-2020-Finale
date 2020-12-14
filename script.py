@@ -1,13 +1,21 @@
 from flask import Flask, Response, request
-from flask import render_template, make_response
+from flask import render_template, make_response, redirect
 from flask_restful import Resource, Api
 import numpy as np
 import flask
-import pickle
+import pickle     
 import json
 import jsonify
 from collections import OrderedDict
 from datetime import datetime
+from influxdb_client import InfluxDBClient, Point, WritePrecision
+from influxdb_client.client.write_api import SYNCHRONOUS
+
+token = "u484skTfr7ZfUNcLw9lRxAhsm1IIqNmtOYyqCf_JTtBulXIC53Qv_HE4q_9H_hG3x_DZMXokvcmjkaZ0iVglGg=="
+org = "org"
+bucket = "sih"
+client = InfluxDBClient(url="http://localhost:8086", token=token)
+
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -15,6 +23,24 @@ app.config['JSON_SORT_KEYS'] = False
 
 api = Api(app)
 # api2 = Api(app)
+
+
+def writedb(maintest):
+    try:
+        write_api = client.write_api(write_options=SYNCHRONOUS)
+        bucket = 'sih'
+        tables=['model1','model2','model3','model4','model5','model6','model7','model8']
+        for i in range(len(maintest)):
+            tname = tables[i]
+            wr = tname + ',host=host1 '
+            pp = maintest[i]
+            for l,m in pp.items():
+                s = wr + l+ '=' + str(m)
+#                 print(s)
+                write_api.write('sih', org,s)
+    except Exception as E:
+        print(E)
+            
 def mdl1(txt1):
     ret = OrderedDict()
     org = txt1.split('$')
@@ -71,7 +97,7 @@ def hec(txt1):
         ret[hdr[i]] = org[i]
     ls = txt1.split('$')
 #     print(ls)
-    print(ls)
+#     print(ls)
     to_predict = np.array(ls).reshape(1,len(ls))
     x = np.asarray(to_predict, dtype='float64')
     loaded_model = pickle.load(open("d2_lr.pkl","rb"))
@@ -90,7 +116,7 @@ def ef(txt1):
 #     print(ls)
     to_predict = np.array(ls).reshape(1,len(ls))
 #     print(to_predict)
-    loaded_model = pickle.load(open("d3_rf_1.pkl","rb"))
+    loaded_model = pickle.load(open("d3_xgb1.pkl","rb"))
     result = loaded_model.predict(to_predict)
     ret['hvac_load'] = str(result[0])
     return ret
@@ -146,6 +172,7 @@ def aep(txt1):
 
 def invalid(txt):
     return 'Bad Request'
+
 class Dash(Resource):
     pass
 res = []
@@ -166,15 +193,27 @@ class Display(Resource):
         res.append(epc(tx[5]))
 #         res.append('AEP MODEL ERROR LGBM')
         res.append(aep(tx[6]))
-        global maintest
         maintest = res
+        writedb(maintest)
         return flask.jsonify(results = res)
         # return invalid(txt)
         # headers = {'Content-Type': 'text/html'}
         # return{'text':'test'}
         # return make_response(render_template("result.html",result= "{}".format(string1)))
 
+# class Dash(Resource):
+#     def get(self):
+#         return redirect("https://www.google.com", code=302)
+    
 api.add_resource(Display, '/search/v1/<string:string1>')
-api.add_resource(Dash, '/dash/v1/<string:string1>')  
+# api.add_resource(Dash, '/dashboard/<string:s1>')
+@app.route('/dash')
+def hello():
+#     webbrowser.open_new_tab("https://curly-stingray-27.loca.lt/dashboard/snapshot/l63YI2RT888zDKHXWd9jFC1ifT6iZrQO?orgId=1&kiosk")
+#     return render_template('res.html')
+    return redirect('http://139.59.57.119:3000/d/LmTA89zmk/sih-building-management-monitoring-and-control-unit?orgId=1&refresh=5s&kiosk', code = '302')
+#     return 'You have been redirected!'
+
+
 if __name__ == '__main__':
     app.run(threaded=False)

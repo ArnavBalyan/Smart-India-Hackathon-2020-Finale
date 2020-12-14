@@ -7,5 +7,4 @@ flask
 uwsgi
 werkzeug
 jsonify
-xgboost
 lightgbm
