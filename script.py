@@ -169,7 +169,54 @@ def aep(txt1):
     result = loaded_model.predict(to_predict)
     ret['global_power'] = str(result[0])
     return ret
+def efp1(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['region_cluster','maintenance_vendor','manufacturer','equipment_type','S15','S17','S13','S5','S16','S19','S18','S8','equipment_age']
+    ret['model_id'] = 5
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("dataset5.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['equipment_health_status(faliure)'] = str(result[0])
+    return ret
 
+def epc1(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['voltage', 'global_intensity','sub_meter_1', 'sub_meter_2','sub_meter_3']
+    ret['model_id'] = 6
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("dataset6_dtr.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['predicted_energy_use'] = result[0]
+    return ret
+
+def aep1(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['temp_ktcharea','humidity_ktcharea','temp_livroom','humidity_livroom','temp_ldroom','humidity_ldroom','temp_ofroom','humidity_ofroom','temp_bthroom','humidity_bthroom','temp_outdoor','humidity_outdoor','temp_irnroom','humidity_irnroom','temp_tnroom','humidity_tnroom','temp_prroom','humidity_prroom','temp_outdoor2','pressure_outdoor2','humidity_outdoor2','wnd_speed_outdoor2','vis_outdoo2','rv1','rv2']
+    ret['model_id'] = 7
+#     print('rcv ln',len(org))
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')
+#     print(ls)
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    loaded_model = pickle.load(open("d7_lightgbm1.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    ret['global_power'] = str(result[0])
+    return ret
 def invalid(txt):
     return 'Bad Request'
 
@@ -200,13 +247,33 @@ class Display(Resource):
         # headers = {'Content-Type': 'text/html'}
         # return{'text':'test'}
         # return make_response(render_template("result.html",result= "{}".format(string1)))
+res1 = []
+class Display2(Resource):
 
+    def get(self, string1):
+        global res1
+        res1 = []
+        txt = string1
+        tx = txt.split('_')
+        res1.append(mdl1(tx[0]))
+        res1.append(hvach(tx[1]))
+        res1.append(hvacc(tx[1]))
+        res1.append(hec(tx[2]))
+#         res1.append('EF MODEL ERROR XGB')
+#         res1.append(ef(tx[3]))        
+        res1.append(efp1(tx[4]))
+        res1.append(epc1(tx[5]))
+#         res1.append('AEP MODEL ERROR LGBM')
+        res1.append(aep1(tx[6]))
+        maintest = res1
+#         writedb(maintest)
+        return flask.jsonify(results = res1)
 # class Dash(Resource):
 #     def get(self):
 #         return redirect("https://www.google.com", code=302)
     
 api.add_resource(Display, '/search/v1/<string:string1>')
-# api.add_resource(Dash, '/dashboard/<string:s1>')
+api.add_resource(Display2, '/search/v2/<string:string1>')
 @app.route('/dash')
 def hello():
 #     webbrowser.open_new_tab("https://curly-stingray-27.loca.lt/dashboard/snapshot/l63YI2RT888zDKHXWd9jFC1ifT6iZrQO?orgId=1&kiosk")
