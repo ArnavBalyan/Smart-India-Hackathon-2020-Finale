@@ -116,7 +116,7 @@ def ef(txt1):
 #     print(ls)
     to_predict = np.array(ls).reshape(1,len(ls))
 #     print(to_predict)
-    loaded_model = pickle.load(open("d3_xgb1.pkl","rb"))
+    loaded_model = pickle.load(open("d3_rf_1.pkl","rb"))
     result = loaded_model.predict(to_predict)
     ret['hvac_load'] = str(result[0])
     return ret
