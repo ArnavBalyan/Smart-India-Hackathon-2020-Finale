@@ -33,4 +33,4 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-    - run: sudo systemctl restart app
+    - run: bash /usr/local/bin/restart-app.sh
