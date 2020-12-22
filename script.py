@@ -257,17 +257,21 @@ class Display(Resource):
         res = []
         txt = string1
         tx = txt.split('_')
+        tmp = []
         res.append(mdl1(tx[0]))
-        res.append(hvach(tx[1]))
-        res.append(hvacc(tx[1]))
-        res.append(hec(tx[2]))
-#         res.append('EF MODEL ERROR XGB')
-        res.append(ef(tx[3]))        
-        res.append(efp(tx[4]))
-        res.append(epc(tx[5]))
-#         res.append('AEP MODEL ERROR LGBM')
-        res.append(aep(tx[6]))
-        maintest = res
+        maintest = []
+        maintest.append(mdl1n(tx[0]))
+        tmp.append(hvach(tx[1]))
+        tmp.append(hvacc(tx[1]))
+        tmp.append(hec(tx[2]))
+#         tmp.append('EF MODEL ERROR XGB')
+        tmp.append(ef(tx[3]))        
+        tmp.append(efp(tx[4]))
+        tmp.append(epc(tx[5]))
+#         tmp.append('AEP MODEL ERROR LGBM')
+        tmp.append(aep(tx[6]))
+        res.append(tmp)
+        maintest.append(tmp)
         writedb(maintest)
         return flask.jsonify(results = res)
         # return invalid(txt)
