@@ -327,7 +327,7 @@ class Display2(Resource):
 # class Dash(Resource):
 #     def get(self):
 #         return redirect("https://www.google.com", code=302)
-    
+
 api.add_resource(Display, '/search/v1/<string:string1>')
 api.add_resource(Display2, '/search/v2/<string:string1>')
 @app.route('/dash')
@@ -336,7 +336,9 @@ def hello():
 #     return render_template('res.html')
     return redirect('http://139.59.57.119:3000/d/LmTA89zmk/sih-building-management-monitoring-and-control-unit?orgId=1&refresh=5s&kiosk', code = '302')
 #     return 'You have been redirected!'
-
+@app.route('/privacy-policy')
+def pp():
+    return render_template('pp.html')
 
 if __name__ == '__main__':
     app.run(threaded=False)
