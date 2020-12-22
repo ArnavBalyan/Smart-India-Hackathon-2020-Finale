@@ -150,7 +150,7 @@ def epc(txt1):
 #     print(to_predict)
     loaded_model = pickle.load(open("dataset6_dtr.pkl","rb"))
     result = loaded_model.predict(to_predict)
-    ret['predicted_energy_use'] = result[0]
+    ret['predicted_energy_use'] = result[0]*10
     return ret
 
 def aep(txt1):
