@@ -243,6 +243,31 @@ def mdl1n(txt1):
     ret['hvac_load'] = result[0]
     return ret
 
+def mdl1n1(txt1):
+    ret = OrderedDict()
+    org = txt1.split('$')
+    hdr = ['room_id','no_of_occupants','indoor_temp','outdoor_temp','floor_no','ceiling_height','room_area','roof_material','humidity']
+    ret['model_id'] = 1
+    for i in range(len(hdr)):
+        ret[hdr[i]] = org[i]
+    ls = txt1.split('$')[1:]
+    roomid = ls[1]
+    floorid = ls[4]
+    to_predict = np.array(ls).reshape(1,len(ls))
+#     print(to_predict)
+    lm1 = pickle.load(open("load_type.pkl","rb"))
+    rs1 = lm1.predict(to_predict)
+    loaded_model = pickle.load(open("hvac_load_new.pkl","rb"))
+    result = loaded_model.predict(to_predict)
+    rss = ''
+    if(rs1 == 0):
+            rss = 'Heating Load'
+    if(rs1 == 1):
+            rss = 'Cooling Load'
+#     ret['hvac_type'] = rss
+    ret['hvac_load'] = result[0]
+    return ret
+
 
 def invalid(txt):
     return 'Bad Request'
@@ -260,7 +285,7 @@ class Display(Resource):
         tmp = []
         res.append(mdl1(tx[0]))
         maintest = []
-        maintest.append(mdl1n(tx[0]))
+        maintest.append(mdl1n1(tx[0]))
         tmp.append(hvach(tx[1]))
         tmp.append(hvacc(tx[1]))
         tmp.append(hec(tx[2]))
