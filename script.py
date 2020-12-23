@@ -339,6 +339,11 @@ def hello():
 @app.route('/privacy-policy')
 def pp():
     return render_template('pp.html')
-
+@app.route('/android')
+def ret_android():
+	return "Welcome to our Mobile Android Application Downloader"
+@app.route('/ios')
+def ret_ios():
+	return "Welcome to our Mobile Ios Application Downloader"
 if __name__ == '__main__':
     app.run(threaded=False)
