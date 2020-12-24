@@ -6,5 +6,6 @@ The application serves the following:
  * 4 APIs
  * 2 Mobile Applications
  * Privacy Policy
- * Routes to the Backend Database and our Dashboards. 
- The Flask application is deployed behind a uWSGI server for production scale along with Restful APIs which serve json data to the hardware. 
+ * Routes to the Backend Database and our Dashboards. <br>
+ 
+The Flask application is deployed behind a uWSGI server for production scale along with Restful APIs which serve json data to the hardware. 
