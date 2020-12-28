@@ -1,4 +1,5 @@
 ![Build](https://github.com/arnavbalyan/SIH/workflows/Python%20application/badge.svg)
+<span style="color:black">
 # Production Scale Web App for Smart India Hackathon '20 (Finals) 
 A uWsgi Production level application built for hosting the architecture of our project and APIs for Smart India Hackathon Finals 2020. <br>
 The application serves the following:
@@ -34,3 +35,4 @@ These are essential to integrate all components of the solution together.
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard1.png "Dash")
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard2.png "Main Db")
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard3.png "Db")
+</span>
