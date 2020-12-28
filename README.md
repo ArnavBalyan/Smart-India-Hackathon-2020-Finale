@@ -21,7 +21,7 @@ The following algorithms were used for creating ML models:
 > - Decision Tree
 > - LightGBM
 
-## APIs 
+## APIs: 
 5 Restful APIs hosted for returning json data the Hardware Hub. The following are the API endpoints (root is the host url):
 > - root/search/v1/params
 > - root/search/v2/params
@@ -39,6 +39,10 @@ The collected data is not processed by or shared with any thied parties. Detaile
 
 ## Backend Database and Dashboards:
 The Dashboards serve real time data and visualizations by making use of InfluxDb which is a no-SQL based application. The routes to Db and Dashboards are not disclosed for security reasons.
+
+## Continuous Integration/ Continuous Delivery:
+CI/CD pipeline is set up with Github Actions for seamless deployment to the servers.  ![Build](https://github.com/arnavbalyan/SIH/workflows/Python%20application/badge.svg)
+
 
 ## Images:
 This is how the app looks like to an operator where real time data, visualizations and analytics are available.
