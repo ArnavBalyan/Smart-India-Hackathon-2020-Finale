@@ -11,3 +11,5 @@ The application serves the following:
 The Flask uWsgi app is deployed using a Gunicorn server which is behing Nginx for production scale along with Restful APIs which serve json data to the hardware. 
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard.png "Main Dash")
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard1.png "Dash")
+![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard2.png "Main Db")
+![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard3.png "Db")
