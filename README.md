@@ -56,3 +56,13 @@ This is how the app looks like to an operator where real time data, visualizatio
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard2.png "Main Db")
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard3.png "Db")
 </span>
+
+## Team:
+The people who made this possible.
+ - [Arnav Balyan](https://github.com/ArnavBalyan)
+ - [Pushpinder Pal Singh](https://github.com/pushpinderpalsingh)
+ - [Devesh Sangwan](https://github.com/deveshsangwan)
+ - [Shubhankar Rawat](https://github.com/ShubhankarRawat)
+ - [Anshita Goel](https://github.com/anshitagoel19)
+ - [Aditi Chawla](https://github.com/aadiitii)
+
