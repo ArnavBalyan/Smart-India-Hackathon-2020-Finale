@@ -9,3 +9,4 @@ The application serves the following:
 > - Routes to the Backend Database and our Dashboards. <br>
  
 The Flask uWsgi app is deployed using a Gunicorn server which is behing Nginx for production scale along with Restful APIs which serve json data to the hardware. 
+![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard.png "Main Dash")
