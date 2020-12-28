@@ -37,7 +37,7 @@ Independent Web Views have exist for both Android and iOS, however real time dyn
  - Refer to APIs to access them
  
 ## Privcacy Policy:
-The collected data is not processed by or shared with any thied parties. Detailed Privacy Policy is available on the web app, refer to API for endpoint.
+The collected data is not processed by or shared with any third parties. Detailed Privacy Policy is available on the web app, refer to API for endpoint.
 
 ## Backend Database and Dashboards:
 The Dashboards serve real time data and visualizations by making use of InfluxDb which is a no-SQL based application. The routes to Db and Dashboards are not disclosed for security reasons.
@@ -47,7 +47,10 @@ CI/CD pipeline is set up with Github Actions for seamless deployment to the serv
 
 
 ## Images:
-This is how the app looks like to an operator where real time data, visualizations and analytics are available.
+This is how the app looks like to an operator where real time data, visualizations and analytics are available. 
+<br/>
+&nbsp;
+
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard.png "Main Dash")
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard1.png "Dash")
 ![alt text](https://github.com/ArnavBalyan/SIH/blob/master/dashboards/sih_dashboard2.png "Main Db")
