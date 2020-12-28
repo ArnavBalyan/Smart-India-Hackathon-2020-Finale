@@ -8,6 +8,7 @@ The application serves the following:
 > - 2 Mobile Applications
 > - Privacy Policy
 > - Routes to the Backend Database and our Dashboards. <br>
+ 
 The Flask uWsgi app is deployed using a Gunicorn server which is behing Nginx for production scale along with Restful APIs which serve json data to the hardware. 
 
 ## Machine Learning Models:
