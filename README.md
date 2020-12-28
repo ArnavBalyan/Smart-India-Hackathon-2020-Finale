@@ -12,22 +12,22 @@ The Flask uWsgi app is deployed using a Gunicorn server which is behing Nginx fo
 
 ## Machine Learning Models:
 The following algorithms were used for creating ML models:
-> - Random Forest
-> - Bagging Classifier
-> - Extra Trees
-> - LSTM
-> - XGBoost
-> - AdaBoost
-> - Decision Tree
-> - LightGBM
+ - Random Forest
+ - Bagging Classifier
+ - Extra Trees
+ - LSTM
+ - XGBoost
+ - AdaBoost
+ - Decision Tree
+ - LightGBM
 
 ## APIs: 
 5 Restful APIs hosted for returning json data the Hardware Hub. The following are the API endpoints (root is the host url):
-> - root/search/v1/params
-> - root/search/v2/params
-> - root/privacy-policy
-> - root/android
-> - root/iOS <br>
+ - root/search/v1/params
+ - root/search/v2/params
+ - root/privacy-policy
+ - root/android
+ - root/iOS <br>
 These are essential to integrate all components of the solution together.
 
 ## Mobile Applications:
