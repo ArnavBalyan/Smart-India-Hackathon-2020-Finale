@@ -29,7 +29,8 @@ The following algorithms were used for creating ML models:
  - root/privacy-policy
  - root/android
  - root/iOS <br>
-These are essential to integrate all components of the solution together.
+ 
+ These are essential to integrate all components of the solution together.
 
 ## Mobile Applications:
 Independent Web Views have exist for both Android and iOS, however real time dynamic data is served to them via this web application.
