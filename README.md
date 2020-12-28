@@ -1,6 +1,6 @@
 ![Build](https://github.com/arnavbalyan/SIH/workflows/Python%20application/badge.svg)
 # Production Scale Web App for Smart India Hackathon '20 (Finals) 
-A Flask Production level application built for hosting the architecture of our project and APIs for Smart India Hackathon Finals 2020. <br>
+A uWsgi Production level application built for hosting the architecture of our project and APIs for Smart India Hackathon Finals 2020. <br>
 The application serves the following:
 > - 8 poweful machine learning models
 > - 4 APIs
