@@ -59,6 +59,7 @@ This is how the app looks like to an operator where real time data, visualizatio
 
 ## Team:
 The people who made this possible.
+ @ArnavBalyan
  - [Arnav Balyan](https://github.com/ArnavBalyan)
  - [Pushpinder Pal Singh](https://github.com/pushpinderpalsingh)
  - [Devesh Sangwan](https://github.com/deveshsangwan)
