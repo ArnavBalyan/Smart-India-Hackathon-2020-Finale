@@ -34,7 +34,7 @@ The following algorithms were used for creating ML models:
 
 ## Mobile Applications:
 Independent Web Views have exist for both Android and iOS, however real time dynamic data is served to them via this web application.
- - Refer to APIs to access them
+ - Refer to APIs to access them.
  
 ## Privcacy Policy:
 The collected data is not processed by or shared with any third parties. Detailed Privacy Policy is available on the web app, refer to API for endpoint.
