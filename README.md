@@ -3,7 +3,7 @@
 # Production Scale Web Application for Smart-India-Hackathon '20 (Finals) 
 A uWsgi Production level application built for hosting the architecture of our project and APIs for Smart India Hackathon Finals 2020. <br>
 The application serves the following:
-> - 8 poweful machine learning models
+> - 8 machine learning models
 > - 5 APIs
 > - 2 Mobile Applications
 > - Privacy Policy
