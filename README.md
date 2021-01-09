@@ -12,7 +12,7 @@ The application serves the following:
 The Flask uWsgi app is deployed using a Gunicorn server which is behing Nginx for production scale along with Restful APIs which serve json data to the hardware. 
 
 ## Machine Learning Models:
-The following algorithms were used for creating ML models:
+The following algorithms were used to create the 8 ML models:
  - Random Forest
  - Bagging Classifier
  - Extra Trees
