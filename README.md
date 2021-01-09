@@ -36,14 +36,14 @@ The following algorithms were used to create the 8 ML models:
 Independent Web Views have exist for both Android and iOS, however real time dynamic data is served to them via this web application.
  - Refer to APIs to access them.
  
-## Privcacy Policy:
-The collected data is not processed by or shared with any third parties. Detailed Privacy Policy is available on the web app, refer to API for endpoint.
-
 ## Backend Database and Dashboards:
 The Dashboards serve real time data and visualizations by making use of InfluxDb which is a no-SQL based application. The routes to Db and Dashboards are not disclosed for security reasons.
 
 ## Continuous Integration/ Continuous Delivery:
 CI/CD pipeline is set up with Github Actions for seamless deployment to the servers.  ![Build](https://github.com/arnavbalyan/SIH/workflows/Python%20application/badge.svg)
+
+## Privcacy Policy:
+The collected data is not processed by or shared with any third parties. Detailed Privacy Policy is available on the web app, refer to API for endpoint.
 
 
 ## Images:
