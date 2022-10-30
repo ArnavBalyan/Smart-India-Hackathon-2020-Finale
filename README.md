@@ -13,8 +13,8 @@ The Flask uWsgi app is deployed using a Gunicorn server which is behing Nginx fo
 
 ## Machine Learning Models:
 The following algorithms were used to create the 8 ML models:
- - Random Forest
- - Bagging Classifier
+ - Random Forest - A class of objects such as a vehicle vary so much in color. Structural cues like shape give a more robust representation. Gradients of specific directions captures some notion of shape. To allow for some variability in shape, we’ll use features known as Histogram of Oriented Gradients (HOG).
+ - Bagging Classifier 
  - Extra Trees
  - LSTM
  - XGBoost
